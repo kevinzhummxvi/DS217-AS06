@@ -1,0 +1,10 @@
+table,issue,decision,reason
+patients,exact duplicate rows,remove exact duplicate rows,Exact duplicate rows contain no additional information.
+patients,gender spellings that are not a code,"Strip and lowercase gender values, map recognized spellings to F, M, or X, and set unrecognized values to missing.",There are multiple spelling schemes for the same gender categories. Unrecognized and unknown values constitute missing data.
+patients,site codes needing normalization,"Uppercase site codes, remove spaces and hyphens.",There are multiple spelling schemes for the same site. 
+patients,birth_year sentinel 9999,Convert birth_year to nullable Int64 and replace 9999 with a missing value.,"9999 is a sentinel value, it has no meaning."
+visits,weight column named wt_kg in visits_south.csv,Rename wt_kg to weight_kg.,Standardize column names for stacking.
+visits,sbp sentinel 999 and readings outside 70 through 250,Convert sbp_mmhg to numeric and set 999 and values outside 70 through 250 to missing.,These values are sentinels or implausible values and therefore are invalid.
+visits,impossible and loosely written visit dates,"Keep dates that are only in the YYYY-MM-DD format and parse to real calendar dates, and set all others to missing.",Remove falsely documented dates.
+visits,repeated patient_id and visit pairs,Sort repeated patient_id and visit pairs by visit_time and keep the last reading.,The repeated patient_id and visit happen when the same patient took multiple readings on the same day. We keep the later reading to provide one consistent record per patient and visit.
+sites,repeated site_code rows,Keep the repeated site codes.,The repeated site codes represent records from different clinics despite being in the same region.
